@@ -38,6 +38,7 @@ from kernel_tools.marketing_tools import MarketingTools
 from kernel_tools.procurement_tools import ProcurementTools
 from kernel_tools.product_tools import ProductTools
 from kernel_tools.tech_support_tools import TechSupportTools
+from kernel_tools.sdg_tools import SDGTools
 
 
 class PlannerAgent(BaseAgent):
@@ -110,7 +111,8 @@ class PlannerAgent(BaseAgent):
             AgentType.PROCUREMENT: ProcurementTools.generate_tools_json_doc(),
             AgentType.TECH_SUPPORT: TechSupportTools.generate_tools_json_doc(),
             AgentType.GENERIC: GenericTools.generate_tools_json_doc(),
-             AgentType.SDG: GenericTools.generate_tools_json_doc(),  # Add this line temporarily
+             AgentType.SDG: SDGTools.generate_tools_json_doc(),  # Use the actual SDG tools 
+             
         }
 
         self._agent_instances = agent_instances or {}
