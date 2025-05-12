@@ -100,6 +100,7 @@ class PlannerAgent(BaseAgent):
             AgentType.PRODUCT.value,
             AgentType.PROCUREMENT.value,
             AgentType.TECH_SUPPORT.value,
+             AgentType.SDG.value,  # Add this line
             AgentType.GENERIC.value,
         ]
         self._agent_tools_list = {
@@ -109,6 +110,7 @@ class PlannerAgent(BaseAgent):
             AgentType.PROCUREMENT: ProcurementTools.generate_tools_json_doc(),
             AgentType.TECH_SUPPORT: TechSupportTools.generate_tools_json_doc(),
             AgentType.GENERIC: GenericTools.generate_tools_json_doc(),
+             AgentType.SDG: GenericTools.generate_tools_json_doc(),  # Add this line temporarily
         }
 
         self._agent_instances = agent_instances or {}
@@ -581,6 +583,8 @@ class PlannerAgent(BaseAgent):
             Ensure the summary of the plan and the overall steps is less than 50 words.
 
             Identify any additional information that might be required to complete the task. Include this information in the plan in the human_clarification_request field of the plan. If it is not required, leave it as null. Do not include information that you are waiting for clarification on in the string of the action field, as this otherwise won't get updated.
+
+            When dealing with tasks related to the UN Sustainable Development Goals (SDGs), sustainability analysis, or alignment with UN development frameworks, prioritize using the SDGAgent. The SDGAgent specializes in analyzing how projects and initiatives align with the 17 SDGs and can provide detailed sustainability assessments.
 
             You must prioritise using the provided functions to accomplish each step. First evaluate each and every function the agents have access too. Only if you cannot find a function needed to complete the task, and you have reviewed each and every function, and determined why each are not suitable, there are two options you can take when generating the plan.
             First evaluate whether the step could be handled by a typical large language model, without any specialised functions. For example, tasks such as "add 32 to 54", or "convert this SQL code to a python script", or "write a 200 word story about a fictional product strategy".
