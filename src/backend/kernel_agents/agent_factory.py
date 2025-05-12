@@ -23,6 +23,7 @@ from kernel_agents.procurement_agent import ProcurementAgent
 from kernel_agents.product_agent import ProductAgent
 from kernel_agents.planner_agent import PlannerAgent  # Add PlannerAgent import
 from kernel_agents.group_chat_manager import GroupChatManager
+from kernel_agents.sdg_agent import SDGAgent  # Add SDGAgent import
 from semantic_kernel.prompt_template.prompt_template_config import PromptTemplateConfig
 from context.cosmos_memory_kernel import CosmosMemoryContext
 from models.messages_kernel import PlannerResponsePlan, AgentType
@@ -49,6 +50,7 @@ class AgentFactory:
         AgentType.HUMAN: HumanAgent,
         AgentType.PLANNER: PlannerAgent,
         AgentType.GROUP_CHAT_MANAGER: GroupChatManager,  # Add GroupChatManager
+        AgentType.SDG: SDGAgent,  # Add SDGAgent
     }
 
     # Mapping of agent types to their string identifiers (for automatic tool loading)
@@ -62,6 +64,7 @@ class AgentFactory:
         AgentType.HUMAN: AgentType.HUMAN.value,
         AgentType.PLANNER: AgentType.PLANNER.value,
         AgentType.GROUP_CHAT_MANAGER: AgentType.GROUP_CHAT_MANAGER.value,
+        AgentType.SDG: AgentType.SDG.value,  # Add SDGAgent
     }
 
     # System messages for each agent type
@@ -75,6 +78,7 @@ class AgentFactory:
         AgentType.HUMAN: HumanAgent.default_system_message(),
         AgentType.PLANNER: PlannerAgent.default_system_message(),
         AgentType.GROUP_CHAT_MANAGER: GroupChatManager.default_system_message(),
+        AgentType.SDG: SDGAgent.default_system_message(),  # Add SDGAgent
     }
 
     # Cache of agent instances by session_id and agent_type
