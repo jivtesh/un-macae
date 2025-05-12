@@ -1,0 +1,48 @@
+name: Trigger auto deployment for ma75c3et3jdicm-backend
+
+# When this action will be executed
+on:
+  # Automatically trigger it when detected changes in repo
+  push:
+    branches: 
+      [ main ]
+    paths:
+    - '**'
+    - '.github/workflows/ma75c3et3jdicm-backend-AutoDeployTrigger-37dfcbd7-c113-48a0-a792-6e674263e378.yml'
+
+  # Allow manual trigger 
+  workflow_dispatch:      
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    permissions: 
+      id-token: write #This is required for requesting the OIDC JWT Token
+      contents: read #Required when GH token is used to authenticate with private repo
+
+    steps:
+      - name: Checkout to the branch
+        uses: actions/checkout@v2
+
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.MA75C3ET3JDICMBACKEND_AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.MA75C3ET3JDICMBACKEND_AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.MA75C3ET3JDICMBACKEND_AZURE_SUBSCRIPTION_ID }}
+
+      - name: Build and push container image to registry
+        uses: azure/container-apps-deploy-action@v2
+        with:
+          appSourcePath: ${{ github.workspace }}
+          _dockerfilePathKey_: _dockerfilePath_
+          registryUrl: unmultireg.azurecr.io
+          registryUsername: ${{ secrets.MA75C3ET3JDICMBACKEND_REGISTRY_USERNAME }}
+          registryPassword: ${{ secrets.MA75C3ET3JDICMBACKEND_REGISTRY_PASSWORD }}
+          containerAppName: ma75c3et3jdicm-backend
+          resourceGroup: rg-undev-eastus2
+          imageToBuild: unmultireg.azurecr.io/ma75c3et3jdicm-backend:${{ github.sha }}
+          _buildArgumentsKey_: |
+            _buildArgumentsValues_
+
+
