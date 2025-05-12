@@ -9,15 +9,30 @@ from typing import Any, Dict, List, get_type_hints
 
 
 class SDGTools:
-    """Define SDG Agent functions (tools)"""
+    """Define SDG Agent functions (tools) for analyzing UN Sustainable Development Goals"""
 
     formatting_instructions = "Instructions: returning the output of this function call verbatim to the user in markdown. Then write AGENT SUMMARY: and then include a summary of what you did."
     agent_name = AgentType.SDG.value
 
     @staticmethod
-    @kernel_function(description="Analyze how a project aligns with specified SDG targets")
+    @kernel_function(
+        description="Analyze a project's alignment with SDG 4 (Quality Education). This should be used for ANY query related to education, training, learning, teaching, or SDG 4."
+    )
+    async def analyze_sdg4_alignment(project_description: str) -> str:
+        """Analyze how a project aligns with SDG 4 (Quality Education) and its targets. Use this for ANY education-related query."""
+        return (
+            f"##### SDG 4 Alignment Analysis\n"
+            f"**Project:** {project_description[:50]}...\n\n"
+            f"Analysis of project alignment with SDG 4 (Quality Education) completed.\n"
+            f"{SDGTools.formatting_instructions}"
+        )
+    
+    @staticmethod
+    @kernel_function(
+        description="Analyze a project's alignment with any SDG by specifying the SDG number. Use for all SDG alignment analysis except SDG 4 (which has its own function)."
+    )
     async def analyze_sdg_alignment(sdg_number: int, project_description: str) -> str:
-        """Analyze how a project aligns with specified SDG targets."""
+        """Analyze how a project aligns with a specified SDG and its targets."""
         return (
             f"##### SDG {sdg_number} Alignment Analysis\n"
             f"**Project:** {project_description[:50]}...\n\n"
@@ -26,7 +41,61 @@ class SDGTools:
         )
     
     @staticmethod
-    @kernel_function(description="Suggest SDG indicators for tracking project impact")
+    @kernel_function(
+        description="Evaluate teacher training components in a project for SDG 4 alignment"
+    )
+    async def analyze_teacher_training(project_description: str) -> str:
+        """Evaluate how a project's teacher training components align with SDG 4."""
+        return (
+            f"##### Teacher Training Analysis for SDG 4\n"
+            f"**Project:** {project_description[:50]}...\n\n"
+            f"Analysis of teacher training components and alignment with SDG 4 completed.\n"
+            f"{SDGTools.formatting_instructions}"
+        )
+    
+    @staticmethod
+    @kernel_function(
+        description="Evaluate digital learning tools in a project for SDG 4 alignment"
+    )
+    async def analyze_digital_learning_tools(project_description: str) -> str:
+        """Evaluate how a project's digital learning tools align with SDG 4."""
+        return (
+            f"##### Digital Learning Tools Analysis for SDG 4\n"
+            f"**Project:** {project_description[:50]}...\n\n"
+            f"Analysis of digital learning tools and alignment with SDG 4 completed.\n"
+            f"{SDGTools.formatting_instructions}"
+        )
+    
+    @staticmethod
+    @kernel_function(
+        description="Evaluate gender equality aspects in education projects (SDG 4.5)"
+    )
+    async def analyze_gender_equality_in_education(project_description: str) -> str:
+        """Evaluate how a project addresses gender equality in education (SDG 4.5)."""
+        return (
+            f"##### Gender Equality in Education Analysis (SDG 4.5)\n"
+            f"**Project:** {project_description[:50]}...\n\n"
+            f"Analysis of gender equality aspects in education and alignment with SDG 4.5 completed.\n"
+            f"{SDGTools.formatting_instructions}"
+        )
+    
+    @staticmethod
+    @kernel_function(
+        description="Evaluate accessibility for persons with disabilities in education projects (SDG 4.5)"
+    )
+    async def analyze_education_accessibility(project_description: str) -> str:
+        """Evaluate how a project addresses accessibility for persons with disabilities in education (SDG 4.5)."""
+        return (
+            f"##### Education Accessibility Analysis for Persons with Disabilities (SDG 4.5)\n"
+            f"**Project:** {project_description[:50]}...\n\n"
+            f"Analysis of accessibility for persons with disabilities in education and alignment with SDG 4.5 completed.\n"
+            f"{SDGTools.formatting_instructions}"
+        )
+    
+    @staticmethod
+    @kernel_function(
+        description="Suggest SDG indicators for tracking project impact"
+    )
     async def suggest_sdg_indicators(sdg_number: int) -> str:
         """Suggest SDG indicators for tracking project impact."""
         return (
@@ -36,7 +105,9 @@ class SDGTools:
         )
     
     @staticmethod
-    @kernel_function(description="Identify UN agencies relevant to a specific SDG")
+    @kernel_function(
+        description="Identify UN agencies relevant to a specific SDG"
+    )
     async def identify_un_agencies(sdg_number: int) -> str:
         """Identify UN agencies relevant to a specific SDG."""
         return (
@@ -46,7 +117,9 @@ class SDGTools:
         )
     
     @staticmethod
-    @kernel_function(description="Generate SDG-specific recommendations for a project")
+    @kernel_function(
+        description="Generate SDG-specific recommendations for a project"
+    )
     async def generate_sdg_recommendations(sdg_number: int, project_description: str) -> str:
         """Generate SDG-specific recommendations for a project."""
         return (
@@ -57,7 +130,9 @@ class SDGTools:
         )
     
     @staticmethod
-    @kernel_function(description="Analyze interlinkages between SDGs for a project")
+    @kernel_function(
+        description="Analyze interlinkages between SDGs for a project"
+    )
     async def analyze_sdg_interlinkages(primary_sdg: int, project_description: str) -> str:
         """Analyze interlinkages between SDGs for a project."""
         return (
@@ -69,23 +144,14 @@ class SDGTools:
         )
     
     @staticmethod
-    @kernel_function(description="Provide implementation guidance for SDG targets")
+    @kernel_function(
+        description="Provide implementation guidance for SDG targets"
+    )
     async def provide_sdg_implementation_guidance(sdg_number: int, target_number: str) -> str:
         """Provide implementation guidance for SDG targets."""
         return (
             f"##### Implementation Guidance for SDG {sdg_number}.{target_number}\n\n"
             f"Implementation guidance for target {sdg_number}.{target_number} has been provided.\n"
-            f"{SDGTools.formatting_instructions}"
-        )
-    
-    @staticmethod
-    @kernel_function(description="Evaluate a project's contribution to leaving no one behind")
-    async def evaluate_lnob_alignment(project_description: str) -> str:
-        """Evaluate a project's contribution to leaving no one behind."""
-        return (
-            f"##### Leave No One Behind Evaluation\n"
-            f"**Project:** {project_description[:50]}...\n\n"
-            f"Evaluation of project's contribution to leaving no one behind completed.\n"
             f"{SDGTools.formatting_instructions}"
         )
 
