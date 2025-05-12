@@ -23,7 +23,8 @@ from kernel_agents.procurement_agent import ProcurementAgent
 from kernel_agents.product_agent import ProductAgent
 from kernel_agents.planner_agent import PlannerAgent  # Add PlannerAgent import
 from kernel_agents.group_chat_manager import GroupChatManager
-from kernel_agents.sdg_agent import SDGAgent  # Add SDGAgent import
+from kernel_tools.sdg_tools import SDGTools
+
 from semantic_kernel.prompt_template.prompt_template_config import PromptTemplateConfig
 from context.cosmos_memory_kernel import CosmosMemoryContext
 from models.messages_kernel import PlannerResponsePlan, AgentType
